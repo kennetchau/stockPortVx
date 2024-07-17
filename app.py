@@ -30,7 +30,7 @@ app = Dash(__name__, external_stylesheets = [dbc.themes.ZEPHYR])
 
 # Create the app layout
 app.layout = [
-            html.Div(children = html.H3(
+            html.Div(children = html.H2(
                 children = "Stock Portfolio"),
                 id = 'Header'
                 ),
@@ -38,12 +38,28 @@ app.layout = [
             html.Div(
             children = [
                 html.Div(
-                    children = dash_table.DataTable(columns = columns, 
-                                 data=dfDis.to_dict('records'), 
-                                 page_size = 10,
-                                 sort_action = 'native',
-                                filter_action = 'native'
-                                ),
+                    children = [
+                                html.Div(
+                                    children = [
+                                        html.H3(children = 'Book Cost' , id = "BookCostTitle"),
+                                        html.Div(
+                                            children = [
+                                                str(round(dfDis['Book Cost'].sum().tolist(),2)) + ' USD'
+                                                ],
+                                                id = 'BookCost_Value'
+                                            )
+                                    ]
+                                    ),
+                                html.Div(
+                                        children = [
+                                        html.H3(children = "Portfolio Overview", id = 'PortSum_Title'),
+                                        dash_table.DataTable(columns = columns, 
+                                         data=dfDis.to_dict('records'), 
+                                         page_size = 10,
+                                         sort_action = 'native',
+                                        filter_action = 'native', id = "PortSum")]
+                                    )
+                                ],
                     id = 'Portfolo',
                     className = 'flex-child'
                 ),
