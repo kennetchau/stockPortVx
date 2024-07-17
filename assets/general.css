@@ -1,0 +1,25 @@
+.flex-container {
+   display: flex; 
+}
+
+.flex-child{
+    flex: 1;
+    height:100%;    
+}
+
+#Portfolo {
+    padding-top: 100px;
+    flex: 0.4;
+}
+
+#barChartControl{
+    padding-left: 80px;
+ }
+
+#SummarySection{
+    margin: 30px;
+}
+
+#Header{
+    margin: 30px;
+}

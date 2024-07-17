@@ -1,0 +1,4 @@
+# Ignoreing csv, json or pickle files
+*.csv
+*.json
+*.pickle
