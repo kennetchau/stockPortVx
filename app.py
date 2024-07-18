@@ -50,15 +50,6 @@ app.layout = [
                                             )
                                     ]
                                     ),
-                                html.Div(
-                                        children = [
-                                        html.H3(children = "Portfolio Overview", id = 'PortSum_Title'),
-                                        dash_table.DataTable(columns = columns, 
-                                         data=dfDis.to_dict('records'), 
-                                         page_size = 10,
-                                         sort_action = 'native',
-                                        filter_action = 'native', id = "PortSum")]
-                                    )
                                 ],
                     id = 'Portfolo',
                     className = 'flex-child'
@@ -80,6 +71,18 @@ app.layout = [
             id = 'SummarySection',
             className = 'flex-container'
                 ),
+
+            html.Div(
+                    children = [
+                    html.H3(children = "Portfolio Overview", id = 'PortSum_Title'),
+                    dash_table.DataTable(columns = columns, 
+                     data=dfDis.to_dict('records'), 
+                     page_size = 10,
+                     sort_action = 'native',
+                    filter_action = 'native', id = "PortSum")],
+
+                    id = "PortOverview"
+                )
             ]
 
 # Add Simple call back for selecting book cost or quantity
