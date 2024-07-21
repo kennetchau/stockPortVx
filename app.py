@@ -3,20 +3,33 @@ import pandas as pd
 import plotly.express as px
 import dash_bootstrap_components as dbc
 
-# Reading the csv
-df = pd.read_csv("data/data.csv")
-df['Book Cost'] = df['Quantity'] * df['Cost']
+class Portfolio:
+        def __init__(self, path):
+            df = pd.read_csv(path)
+            df['Book Cost'] = df['Quantity'] * df['Cost']
+            dfStockPortOver = df.drop(columns = ['Date']).groupby(by = "Symbol").sum().reset_index(drop=False)
+            dfStockPortOver = dfStockPortOver[["Symbol", "Quantity", "Book Cost"]]
+            dfStockPortOver['Average Cost'] = dfStockPortOver['Book Cost']/dfStockPortOver['Quantity']
+            self.dfStockPortRecords = df.sort_values(by='Date', ascending = False).head(10)
+            self.dfStockPortOver = dfStockPortOver.sort_values(by = "Book Cost", ascending = False)
 
-# Create a work df 
-dfWork = df.drop('Cost', axis = 1)
+        def returnTable(self, choice:str)->pd.DataFrame:
+            match choice:
+                case 'Overview':
+                    return self.dfStockPortOver
+                case 'records':
+                    return self.dfStockPortRecords
+                case _:
+                    return None
 
-# Create Table to display
-dfDis = df.groupby(by=['Symbol']).sum()
-dfDis = dfDis[['Quantity','Book Cost']]
-dfDis['Average Cost'] = dfDis['Book Cost']/dfDis['Quantity']
-dfDis = dfDis.reset_index().sort_values(by = "Book Cost")
+        def returnBookCost(self)->str:
+           return str(round(self.dfStockPortOver['Book Cost'].sum(),2))
 
 def main():
+        PortFolio = Portfolio("data/data.csv")
+        
+        dfDis = PortFolio.returnTable('Overview')
+
         # Create table
         money = dash_table.FormatTemplate.money(2)
         columns = [
