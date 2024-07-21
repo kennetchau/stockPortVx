@@ -8,8 +8,8 @@ class Portfolio:
             df = pd.read_csv(path)
             df['Book Cost'] = df['Quantity'] * df['Cost']
             dfStockPortOver = df.drop(columns = ['Date']).groupby(by = "Symbol").sum().reset_index(drop=False)
-            dfStockPortOver = dfStockPortOver[["Symbol", "Quantity", "Book Cost"]]
             dfStockPortOver['Average Cost'] = dfStockPortOver['Book Cost']/dfStockPortOver['Quantity']
+            dfStockPortOver = dfStockPortOver[["Symbol", "Quantity", "Average Cost", "Book Cost"]]
             self.dfStockPortRecords = df.sort_values(by='Date', ascending = False).head(10)
             self.dfStockPortOver = dfStockPortOver.sort_values(by = "Book Cost", ascending = False)
 
@@ -35,8 +35,8 @@ def main():
         columns = [
                 dict(id = 'Symbol', name = 'Symbol'),
                 dict(id = 'Quantity', name = 'Quantity'),
-                dict(id = 'Book Cost', name = 'Book Cost', type = 'numeric', format = money),
                 dict(id = 'Average Cost', name = 'Average Cost', type = 'numeric', format = money),
+                dict(id = 'Book Cost', name = 'Book Cost', type = 'numeric', format = money),
                 ]
 
         # Initialize the App
