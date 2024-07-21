@@ -112,6 +112,7 @@ def main():
                                 histfunc = 'sum',
                                 )
             return figure
+        
         app.run(debug = True)
 
 if __name__ == '__main__':
