@@ -16,88 +16,90 @@ dfDis = dfDis[['Quantity','Book Cost']]
 dfDis['Average Cost'] = dfDis['Book Cost']/dfDis['Quantity']
 dfDis = dfDis.reset_index().sort_values(by = "Book Cost")
 
-# Create table
-money = dash_table.FormatTemplate.money(2)
-columns = [
-        dict(id = 'Symbol', name = 'Symbol'),
-        dict(id = 'Quantity', name = 'Quantity'),
-        dict(id = 'Book Cost', name = 'Book Cost', type = 'numeric', format = money),
-        dict(id = 'Average Cost', name = 'Average Cost', type = 'numeric', format = money),
-        ]
+def main():
+        # Create table
+        money = dash_table.FormatTemplate.money(2)
+        columns = [
+                dict(id = 'Symbol', name = 'Symbol'),
+                dict(id = 'Quantity', name = 'Quantity'),
+                dict(id = 'Book Cost', name = 'Book Cost', type = 'numeric', format = money),
+                dict(id = 'Average Cost', name = 'Average Cost', type = 'numeric', format = money),
+                ]
 
-# Initialize the App
-app = Dash(__name__, external_stylesheets = [dbc.themes.ZEPHYR])
+        # Initialize the App
+        app = Dash(__name__, external_stylesheets = [dbc.themes.ZEPHYR])
 
-# Create the app layout
-app.layout = [
-            html.Div(children = html.H2(
-                children = "Stock Portfolio"),
-                id = 'Header'
-                ),
-            
-            html.Div(
-            children = [
-                html.Div(
+        # Create the app layout
+        app.layout = [
+                    html.Div(children = html.H2(
+                        children = "Stock Portfolio"),
+                        id = 'Header'
+                        ),
+                    
+                    html.Div(
                     children = [
-                                html.Div(
-                                    children = [
-                                        html.H3(children = 'Book Cost' , id = "BookCostTitle"),
+                        html.Div(
+                            children = [
                                         html.Div(
                                             children = [
-                                                str(round(dfDis['Book Cost'].sum().tolist(),2)) + ' USD'
-                                                ],
-                                                id = 'BookCost_Value'
-                                            )
-                                    ]
-                                    ),
+                                                html.H3(children = 'Book Cost' , id = "BookCostTitle"),
+                                                html.Div(
+                                                    children = [
+                                                        str(round(dfDis['Book Cost'].sum().tolist(),2)) + ' USD'
+                                                        ],
+                                                        id = 'BookCost_Value'
+                                                    )
+                                            ]
+                                            ),
+                                        ],
+                            id = 'Portfolo',
+                            className = 'flex-child'
+                        ),
+                        html.Div(
+                            children = [
+                                dcc.RadioItems(
+                                        options = ['Book Cost', 'Quantity'],
+                                        value = 'Book Cost',
+                                        id = 'barChartControl'),
+                                dcc.Graph(figure = {},
+                                          id = 'SummaryGraph',
+                                          className = 'flex-child'
+                                          )
                                 ],
-                    id = 'Portfolo',
-                    className = 'flex-child'
-                ),
-                html.Div(
-                    children = [
-                        dcc.RadioItems(
-                                options = ['Book Cost', 'Quantity'],
-                                value = 'Book Cost',
-                                id = 'barChartControl'),
-                        dcc.Graph(figure = {},
-                                  id = 'SummaryGraph',
-                                  className = 'flex-child'
-                                  )
+                            className = 'flex-child'
+                            )
                         ],
-                    className = 'flex-child'
-                    )
-                ],
-            id = 'SummarySection',
-            className = 'flex-container'
-                ),
+                    id = 'SummarySection',
+                    className = 'flex-container'
+                        ),
 
-            html.Div(
-                    children = [
-                    html.H3(children = "Portfolio Overview", id = 'PortSum_Title'),
-                    dash_table.DataTable(columns = columns, 
-                     data=dfDis.to_dict('records'), 
-                     page_size = 10,
-                     sort_action = 'native',
-                    filter_action = 'native', id = "PortSum")],
+                    html.Div(
+                            children = [
+                            html.H3(children = "Portfolio Overview", id = 'PortSum_Title'),
+                            dash_table.DataTable(columns = columns, 
+                             data=dfDis.to_dict('records'), 
+                             page_size = 10,
+                             sort_action = 'native',
+                            filter_action = 'native', id = "PortSum")],
 
-                    id = "PortOverview"
-                )
-            ]
-
-# Add Simple call back for selecting book cost or quantity
-@callback (
-        Output(component_id = 'SummaryGraph', component_property = 'figure'),
-        Input(component_id = 'barChartControl', component_property = 'value'),
-)
-def update_graph(col_chosen):
-    dfEdit = dfDis.sort_values(by = col_chosen, ascending = True)
-    figure = px.histogram(dfEdit,
-                        x=col_chosen,
-                        y='Symbol',
-                        histfunc = 'sum',
+                            id = "PortOverview"
                         )
-    return figure
+                    ]
+
+        # Add Simple call back for selecting book cost or quantity
+        @callback (
+                Output(component_id = 'SummaryGraph', component_property = 'figure'),
+                Input(component_id = 'barChartControl', component_property = 'value'),
+        )
+        def update_graph(col_chosen):
+            dfEdit = dfDis.sort_values(by = col_chosen, ascending = True)
+            figure = px.histogram(dfEdit,
+                                x=col_chosen,
+                                y='Symbol',
+                                histfunc = 'sum',
+                                )
+            return figure
+        app.run(debug = True)
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    main()
