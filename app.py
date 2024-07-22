@@ -44,10 +44,13 @@ def main():
 
         # Create the app layout
         app.layout = [
-                    html.Div(children = html.H2(
-                        children = "Stock Portfolio"),
-                        id = 'Header'
-                        ),
+                    html.Div(children = [
+                                        html.H2(children =[html.Img(src = 'assets/logos/stock-ticker-svgrepo-com.svg'),
+                                                           "Stock Portfolio"],
+                                                id = 'Header'),
+                                         ],
+                             className = "Header"
+                             ),
                     
                     html.Div(
                     children = [
