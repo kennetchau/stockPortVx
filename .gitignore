@@ -3,3 +3,4 @@
 *.json
 *.pickle
 cred.py
+*.pyc
