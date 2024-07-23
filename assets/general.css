@@ -23,13 +23,6 @@
     margin: 30px;
 }
 
-#BookCost_Value{
-    font-size: 25px;
-    margin: 5px;
-    text-align: center;
-    background: GhostWhite;
-}
-
 #PortSum_Title{
     margin:20px 0px 10px 0px;
 }
@@ -42,6 +35,22 @@
   width: 35px;
   height: 35px;
   margin: 5px;
+}
+
+.Summary_Value{
+    font-size: 25px;
+    margin: 5px;
+    text-align: center;
+    background: GhostWhite;
+}
+
+.Summary_Value.positiveNumber{
+    color: green;
+}
+
+
+.Summary_Value.negativeNumber{
+    color: red;
 }
 
 

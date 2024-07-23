@@ -7,7 +7,7 @@ import dash_bootstrap_components as dbc
 
 class Portfolio:
     def __init__(self, path):
-        df = pd.read_csv(path)
+        df = pd.read_json(path)
 
         # Set the original df as the trading record table
         self.dfStockPortRecords = df.sort_values(by='Date', ascending = False)
@@ -57,20 +57,24 @@ class Portfolio:
         else:
             return tickerPrices.status_code
 
-    def returnBookCost(self)->str:
-        return str(round(self.dfStockPortOver['Book Cost'].sum(),2))
+    def returnBookCost(self)->float:
+        return self.dfStockPortOver['Book Cost'].sum()
 
-    def returnMarketValue(self)->str:
-        return str(round(self.dfStockPortOver['Market Value'].sum(),2))
+    def returnMarketValue(self)->float:
+        return self.dfStockPortOver['Market Value'].sum()
     
-    def returnUnrealizeGainOrLoss(self)->str:
-        return str(round(self.dfStockPortOver['Market Value'].sum()- self.dfStockPortOver['Book Cost'].sum(),2))
+    def returnUnrealizeGainOrLoss(self)->list:
+        value = self.dfStockPortOver['Market Value'].sum()- self.dfStockPortOver['Book Cost'].sum()
+        if value > 0:
+            return value, "positiveNumber"
+        else:
+            return value, "negativeNumber"
     
     def returnUniqueHold(self)->list:
         return self.dfStockPortOver.Symbol.unique().tolist()
 
 def main():
-        PortFolio = Portfolio("data/data.csv")
+        PortFolio = Portfolio("data/data.json")
         
         dfDis = PortFolio.returnTable('Overview')
 
@@ -81,6 +85,7 @@ def main():
                 dict(id = 'Quantity', name = 'Quantity'),
                 dict(id = 'Average Cost', name = 'Average Cost', type = 'numeric', format = money),
                 dict(id = 'Book Cost', name = 'Book Cost', type = 'numeric', format = money),
+                dict(id = 'Market Value', name = 'Market Value', type = 'numeric', format = money),
                 ]
 
         # Initialize the App
@@ -105,10 +110,27 @@ def main():
                                                 html.H3(children = 'Book Cost' , id = "BookCostTitle"),
                                                 html.Div(
                                                     children = [
-                                                        str(round(dfDis['Book Cost'].sum().tolist(),2)) + ' USD'
+                                                        '$ {:0,.2f} USD'.format(PortFolio.returnBookCost())
                                                         ],
-                                                        id = 'BookCost_Value'
-                                                    )
+                                                        id = 'BookCost_Value',
+                                                        className = 'Summary_Value'
+                                                    ),
+                                                html.H3(children = 'Market Value' , id = "MarketValueTitle" ),
+                                                html.Div(
+                                                    children = [
+                                                        '$ {:0,.2f} USD'.format(PortFolio.returnMarketValue())
+                                                        ],
+                                                        id = 'Market_Value',
+                                                        className = 'Summary_Value'
+                                                ),
+                                                html.H3(children = 'Unrealized Gain or Loss' , id = "UnrealizedGainOrLossTitle" ),
+                                                html.Div(
+                                                    children = [
+                                                        '$ {:0,.2f} USD'.format(PortFolio.returnUnrealizeGainOrLoss()[0])
+                                                        ],
+                                                        id = 'UGainOrLoss_Value',
+                                                        className = 'Summary_Value' + ' ' + PortFolio.returnUnrealizeGainOrLoss()[1]
+                                                )
                                             ]
                                             ),
                                         ],
