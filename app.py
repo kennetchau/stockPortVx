@@ -107,31 +107,46 @@ def main():
                             children = [
                                         html.Div(
                                             children = [
-                                                html.H3(children = 'Book Cost' , id = "BookCostTitle"),
                                                 html.Div(
                                                     children = [
-                                                        '$ {:0,.2f} USD'.format(PortFolio.returnBookCost())
+                                                        html.H3(children = 'Book Cost' , id = "BookCostTitle"),
+                                                        html.Div(
+                                                            children = [
+                                                                '$ {:0,.2f} USD'.format(PortFolio.returnBookCost())
+                                                                ],
+                                                                id = 'BookCost_Value',
+                                                                className = 'Summary_Value'
+                                                            ),
                                                         ],
-                                                        id = 'BookCost_Value',
-                                                        className = 'Summary_Value'
-                                                    ),
-                                                html.H3(children = 'Market Value' , id = "MarketValueTitle" ),
-                                                html.Div(
-                                                    children = [
-                                                        '$ {:0,.2f} USD'.format(PortFolio.returnMarketValue())
-                                                        ],
-                                                        id = 'Market_Value',
-                                                        className = 'Summary_Value'
+                                                    className = 'Summary_Value_Container'
                                                 ),
-                                                html.H3(children = 'Unrealized Gain or Loss' , id = "UnrealizedGainOrLossTitle" ),
                                                 html.Div(
                                                     children = [
-                                                        '$ {:0,.2f} USD'.format(PortFolio.returnUnrealizeGainOrLoss()[0])
+                                                            html.H3(children = 'Market Value' , id = "MarketValueTitle" ),
+                                                            html.Div(
+                                                                children = [
+                                                                    '$ {:0,.2f} USD'.format(PortFolio.returnMarketValue())
+                                                                    ],
+                                                                    id = 'Market_Value',
+                                                                    className = 'Summary_Value'
+                                                            ),
+                                                        ],                                                        
+                                                    className = 'Summary_Value_Container'
+                                                ),
+                                                html.Div(
+                                                        children = [
+                                                            html.H3(children = 'Unrealized Gain or Loss' , id = "UnrealizedGainOrLossTitle" ),
+                                                            html.Div(
+                                                                children = [
+                                                                    '$ {:0,.2f} USD'.format(PortFolio.returnUnrealizeGainOrLoss()[0])
+                                                                    ],
+                                                                    id = 'UGainOrLoss_Value',
+                                                                    className = 'Summary_Value' + ' ' + PortFolio.returnUnrealizeGainOrLoss()[1]
+                                                            )
                                                         ],
-                                                        id = 'UGainOrLoss_Value',
-                                                        className = 'Summary_Value' + ' ' + PortFolio.returnUnrealizeGainOrLoss()[1]
-                                                )
-                                            ]
+                                                    className = 'Summary_Value_Container'
+                                                ),
+                                                ]
                                             ),
                                         ],
                             id = 'Portfolo',

@@ -44,13 +44,16 @@
     background: GhostWhite;
 }
 
-.Summary_Value.positiveNumber{
+.positiveNumber{
     color: green;
 }
 
-
-.Summary_Value.negativeNumber{
+.negativeNumber{
     color: red;
+}
+
+.Summary_Value_Container{
+    margin: 20px 0px 20px 0px;
 }
 
 
