@@ -4,3 +4,4 @@
 *.pickle
 cred.py
 *.pyc
+__pycache__/*
