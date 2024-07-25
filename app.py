@@ -184,11 +184,21 @@ def main():
                     html.Div(
                             children = [
                             html.H3(children = "Portfolio Overview", id = 'PortSum_Title'),
-                            dash_table.DataTable(columns = columns, 
+                            dash_table.DataTable(
+                            columns = columns, 
                              data=dfDis.to_dict('records'), 
                              page_size = 10,
                              sort_action = 'native',
-                            filter_action = 'native', id = "PortSum")],
+                            filter_action = 'native', id = "PortSum",
+                            style_header = {
+                                'fontWeight':'bold',
+                                'textAlign': 'center',
+                                },
+                            style_cell={'textAlign': 'center',
+                                        'padding':'3px'},
+                            style_as_list_view = True,
+
+                            )],
 
                             id = "PortOverview"
                         ),
