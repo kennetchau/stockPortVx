@@ -45,19 +45,19 @@
   margin: 5px;
 }
 
-.Summary_Value{
-    font-size: 25px;
-    margin: 5px;
-    text-align: center;
-    background: GhostWhite;
-}
-
 .positiveNumber{
     color: green;
 }
 
 .negativeNumber{
     color: red;
+}
+
+.Summary_Value{
+    font-size: 25px;
+    margin: 5px;
+    text-align: center;
+    background: GhostWhite;
 }
 
 .Summary_Value_Container{
