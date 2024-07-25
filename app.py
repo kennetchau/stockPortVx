@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+
+"""
+    This is a simple dashboard use to track portfolio prices
+    build using dash
+    Author: Kenneth Chau
+"""
+
 from dash import Dash, html, dash_table, dcc, callback, Output, Input
 import pandas as pd
 import cred
@@ -40,6 +48,7 @@ class Portfolio:
                 return currentDf[currentDf['Symbol'] == item]['Average Cost'].values[0]
         currentDf['Current Price'] = currentDf['Symbol'].apply(applyUpdatesPrices)
         currentDf['Market Value'] = currentDf['Current Price'] * currentDf['Quantity']
+        currentDf['Unrealized Gain or Loss'] = currentDf['Market Value'] - currentDf['Book Cost']
         currentDf['% Change'] = (currentDf['Market Value']/currentDf['Book Cost'] - 1)*100
         return currentDf
 
@@ -86,6 +95,7 @@ def main():
                 dict(id = 'Average Cost', name = 'Average Cost', type = 'numeric', format = money),
                 dict(id = 'Book Cost', name = 'Book Cost', type = 'numeric', format = money),
                 dict(id = 'Market Value', name = 'Market Value', type = 'numeric', format = money),
+                dict(id = 'Unrealized Gain or Loss', name = 'Unrealized Gain or Loss', type = 'numeric', format = money),
                 ]
 
         # Initialize the App
@@ -155,8 +165,8 @@ def main():
                         html.Div(
                             children = [
                                 dcc.RadioItems(
-                                        options = ['Book Cost', 'Quantity'],
-                                        value = 'Book Cost',
+                                        options = ['Market Value', 'Book Cost', 'Unrealized Gain or Loss'],
+                                        value = 'Market Value',
                                         id = 'barChartControl'),
                                 dcc.Graph(figure = {},
                                           id = 'SummaryGraph',
