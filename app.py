@@ -7,6 +7,7 @@
 """
 from datetime import datetime
 from dash import Dash, html, dash_table, dcc, callback, Output, Input
+from dash_bootstrap_templates import load_figure_template
 import pandas as pd
 import cred
 import requests
@@ -100,7 +101,8 @@ def main():
                 ]
 
         # Initialize the App
-        app = Dash(__name__, external_stylesheets = [dbc.themes.ZEPHYR])
+        app = Dash(__name__, external_stylesheets = [dbc.themes.CYBORG])
+        load_figure_template(['cyborg'])
 
         # Create the app layout
         app.layout = [
@@ -184,11 +186,32 @@ def main():
                     html.Div(
                             children = [
                             html.H3(children = "Portfolio Overview", id = 'PortSum_Title'),
-                            dash_table.DataTable(columns = columns, 
+                            dash_table.DataTable(
+                            columns = columns, 
                              data=dfDis.to_dict('records'), 
                              page_size = 10,
                              sort_action = 'native',
-                            filter_action = 'native', id = "PortSum")],
+                            filter_action = 'native', id = "PortSum",
+                            style_cell = {'textAlign':'left'},
+                            
+                            style_header = {
+                            'backgroundColor' : 'rgb(30,30,30)',
+                            'color': 'white'
+                                },
+                            
+                            style_data = {
+                            'backgroundColor' : 'rgb(50,30,50)',
+                            'color': 'white'
+                                },
+
+                            style_filter = {
+                            'backgroundColor' : 'rgb(30,30,30)',
+                            'color': 'white'
+                                }
+
+                            )
+
+                            ],
 
                             id = "PortOverview"
                         ),
@@ -213,6 +236,7 @@ def main():
                                 x=col_chosen,
                                 y='Symbol',
                                 histfunc = 'sum',
+                                template = 'cyborg',
                                 )
             return figure
         
