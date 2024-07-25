@@ -5,7 +5,7 @@
     build using dash
     Author: Kenneth Chau
 """
-
+from datetime import datetime
 from dash import Dash, html, dash_table, dcc, callback, Output, Input
 import pandas as pd
 import cred
@@ -83,6 +83,7 @@ class Portfolio:
         return self.dfStockPortOver.Symbol.unique().tolist()
 
 def main():
+        currentDateAndTime = datetime.now().strftime("%d %b %Y, %H:%M:%S")
         PortFolio = Portfolio("data/data.json")
         
         dfDis = PortFolio.returnTable('Overview')
@@ -190,6 +191,14 @@ def main():
                             filter_action = 'native', id = "PortSum")],
 
                             id = "PortOverview"
+                        ),
+                    
+                    html.Div(
+                            children = [
+                                html.P(children = f"Data refresh at {currentDateAndTime}"),
+                                html.P(children = "Data source: twelve data")
+                                ],
+                            id = "footer"
                         )
                     ]
 
