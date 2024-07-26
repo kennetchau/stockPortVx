@@ -102,6 +102,7 @@ def main():
 
         # Initialize the App
         app = Dash(__name__, external_stylesheets = [dbc.themes.ZEPHYR])
+        app.title = "Stock Portfolio"
 
         # Create the app layout
         app.layout = [
