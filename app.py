@@ -94,6 +94,7 @@ def main():
                 dict(id = 'Symbol', name = 'Symbol'),
                 dict(id = 'Quantity', name = 'Quantity'),
                 dict(id = 'Average Cost', name = 'Average Cost', type = 'numeric', format = money),
+                dict(id = 'Current Price', name = 'Current Price', type = 'numeric', format = money),
                 dict(id = 'Book Cost', name = 'Book Cost', type = 'numeric', format = money),
                 dict(id = 'Market Value', name = 'Market Value', type = 'numeric', format = money),
                 dict(id = 'Unrealized Gain or Loss', name = 'Unrealized Gain or Loss', type = 'numeric', format = money),
