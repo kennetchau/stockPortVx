@@ -1,3 +1,9 @@
+"""
+    Author: Kenneth Chau
+    Name: dataPrep.py
+    Description: This script contain the class to prepare data for the dash dashboard
+"""
+
 import pandas as pd
 import cred
 import requests
