@@ -1,0 +1,67 @@
+.flex-container {
+   display: flex; 
+}
+
+.flex-child{
+    flex: 1;
+    height:100%;    
+}
+
+#Portfolo {
+    flex: 0.4;
+}
+
+#barChartControl{
+    padding-left: 80px;
+ }
+
+#SummarySection{
+    margin: 30px;
+}
+
+#Header{
+    margin: 30px;
+}
+
+#PortSum_Title{
+    margin:20px 0px 10px 0px;
+}
+
+#PortOverview{
+    margin: 30px;
+}
+
+#footer{
+    margin:30px;
+}
+
+#footer p{
+    margin:0px;
+}
+
+.Header h2 img {
+  width: 35px;
+  height: 35px;
+  margin: 5px;
+}
+
+.positiveNumber{
+    color: green;
+}
+
+.negativeNumber{
+    color: red;
+}
+
+.Summary_Value{
+    font-size: 25px;
+    margin: 5px;
+    text-align: center;
+    background: GhostWhite;
+}
+
+.Summary_Value_Container{
+    margin: 20px 0px 20px 0px;
+}
+
+
