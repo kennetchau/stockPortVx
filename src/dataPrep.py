@@ -37,8 +37,11 @@ class Portfolio:
     # This is the function that will update the price of the table
     def updatePrices(self, currentDf:pd.DataFrame, currentPrice:dict)->pd.DataFrame:
         def applyUpdatesPrices(item):
-            try: 
-                return float(currentPrice[item]['price'])
+            try:
+                if len(currentDf) == 1:
+                    return float(currentPrice['price'])
+                else: 
+                    return float(currentPrice[item]['price'])
             except KeyError:
                 return currentDf[currentDf['Symbol'] == item]['Average Cost'].values[0]
         currentDf['Current Price'] = currentDf['Symbol'].apply(applyUpdatesPrices)
