@@ -82,10 +82,12 @@ class Portfolio:
     def returnUniqueHold(self)->list:
         return self.dfStockPortOver.Symbol.unique().tolist()
 
-def main():
+
+def layout(app):
+        # Get the current time
         currentDateAndTime = datetime.now().strftime("%d %b %Y, %H:%M:%S")
+        # Getting the data
         PortFolio = Portfolio("data/data.json")
-        
         dfDis = PortFolio.returnTable('Overview')
 
         # Create table
@@ -99,11 +101,6 @@ def main():
                 dict(id = 'Market Value', name = 'Market Value', type = 'numeric', format = money),
                 dict(id = 'Unrealized Gain or Loss', name = 'Unrealized Gain or Loss', type = 'numeric', format = money),
                 ]
-
-        # Initialize the App
-        app = Dash(__name__, external_stylesheets = [dbc.themes.ZEPHYR])
-        app.title = "Stock Portfolio"
-
         # Create the app layout
         app.layout = [
                     html.Div(children = [
@@ -227,7 +224,15 @@ def main():
                                 histfunc = 'sum',
                                 )
             return figure
-        
+
+        return app.layout
+
+# Create the main function
+def main():
+        # Initialize the App
+        app = Dash(__name__, external_stylesheets = [dbc.themes.ZEPHYR])
+        app.title = "Stock Portfolio"
+        app.layout = layout(app)
         app.run(debug = True)
 
 if __name__ == '__main__':
