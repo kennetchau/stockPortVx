@@ -196,7 +196,22 @@ def layout(app):
                             style_cell={'textAlign': 'center',
                                         'padding':'3px'},
                             style_as_list_view = True,
-
+                            style_data_conditional = [
+                                {
+                                    'if':{
+                                    'filter_query':'{Unrealized Gain or Loss} < 0',
+                                    'column_id': 'Unrealized Gain or Loss'
+                                        },
+                                    'color':'red',
+                                },
+                                {
+                                    'if':{
+                                    'filter_query':'{Unrealized Gain or Loss} > 0',
+                                    'column_id': 'Unrealized Gain or Loss'
+                                        },
+                                    'color':'green',
+                                }
+                            ]
                             )],
 
                             id = "PortOverview"
